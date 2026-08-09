@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Exercice — La franchise et la participation forfaitaire</title>
+<style>
+:root{--prune:#8C1E70;--pruneD:#5E1349;--pruneC:#F4E6EE;--gris:#3C3C3C;--grisM:#8A7A85;
+ --filet:#E8DCE5;--fond:#FAF6F8;--vert:#1B7A4B;--vertC:#EAF5EF;--rouge:#B3261E;--rougeC:#FCEDEC;
+ --or:#C9A961;--orC:#FCF4DC}
+*{box-sizing:border-box}
+body{margin:0;background:var(--fond);color:var(--gris);line-height:1.5;
+ font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif}
+.wrap{max-width:880px;margin:0 auto;padding:0 16px 48px}
+header{background:var(--pruneD);color:#fff;padding:22px 16px 20px}
+header .in{max-width:880px;margin:0 auto}
+.marque{font-size:11px;letter-spacing:.12em;color:#E8C9DF;font-weight:700;margin-bottom:6px}
+h1{margin:0 0 6px;font-size:24px}
+header p{margin:0;color:#EBD6E4;font-size:14px}
+.card{background:#fff;border:1px solid var(--filet);border-radius:10px;padding:20px;margin-top:20px}
+.card h2{margin:0 0 4px;font-size:17px;color:var(--pruneD)}
+.card .sub{margin:0 0 14px;color:var(--grisM);font-size:13.5px}
+.consigne{background:var(--pruneC);border-left:4px solid var(--prune);padding:12px 14px;
+ border-radius:0 6px 6px 0;font-size:14px;margin-bottom:16px}
+.consigne b{color:var(--pruneD)}
+.it{border-top:1px solid var(--filet);padding:13px 0}
+.it:first-of-type{border-top:0}
+.it .q{font-size:14px;margin-bottom:9px}
+.it .q b{color:var(--pruneD)}
+.ch{display:flex;gap:8px;flex-wrap:wrap}
+.ch button{border:1.5px solid var(--filet);background:#fff;color:var(--gris);border-radius:7px;
+ padding:7px 15px;font-size:13.5px;font-weight:600;cursor:pointer;font-family:inherit}
+.ch button:hover:not(:disabled){border-color:var(--prune)}
+.ch button.on{border-color:var(--prune);background:var(--pruneC);color:var(--pruneD)}
+.ch button:disabled{cursor:default;opacity:.75}
+.ch button.juste{border-color:var(--vert);background:var(--vertC);color:var(--vert);opacity:1}
+.ch button.rate{border-color:var(--rouge);background:var(--rougeC);color:var(--rouge);opacity:1}
+select{border:1.5px solid var(--filet);border-radius:7px;padding:8px 11px;font-size:14px;
+ font-family:inherit;color:var(--pruneD);font-weight:600;background:#fff;max-width:100%}
+select:focus{outline:none;border-color:var(--prune)}
+select.juste{border-color:var(--vert);background:var(--vertC)}
+select.rate{border-color:var(--rouge);background:var(--rougeC)}
+input.num{border:1.5px solid var(--filet);border-radius:7px;padding:8px 11px;font-size:15px;
+ font-family:inherit;color:var(--pruneD);font-weight:700;width:150px;background:#fff}
+input.num:focus{outline:none;border-color:var(--prune)}
+input.num.juste{border-color:var(--vert);background:var(--vertC)}
+input.num.rate{border-color:var(--rouge);background:var(--rougeC)}
+.badge{display:inline-flex;align-items:center;gap:7px;font-size:12.5px;padding:6px 12px;
+ border-radius:20px;font-weight:600;margin:0 0 14px}
+.badge.live{background:var(--vertC);color:var(--vert)}
+.badge.wait{background:var(--pruneC);color:var(--prune)}
+.badge.fall{background:var(--orC);color:#8a6d1f}
+.badge .pt{width:8px;height:8px;border-radius:50%;background:currentColor}
+.x{margin-top:9px;padding:9px 12px;border-radius:7px;font-size:13.2px;display:none;
+ background:var(--fond);border-left:3px solid var(--prune)}
+.x.on{display:block}
+.x b{color:var(--pruneD)}
+.btn{border:0;border-radius:7px;padding:11px 22px;font-size:14.5px;font-weight:600;
+ cursor:pointer;font-family:inherit}
+.btn-p{background:var(--prune);color:#fff}
+.btn-p:disabled{background:#C9AABE;cursor:default}
+.btn-g{background:#fff;color:var(--prune);border:1px solid var(--prune)}
+.bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:16px;
+ border-top:1px solid var(--filet);padding-top:14px}
+.fige{color:var(--grisM);font-size:12.5px;font-style:italic}
+.msg{margin-top:11px;padding:10px 13px;border-radius:7px;font-size:13.5px;display:none}
+.msg.err{background:var(--rougeC);color:var(--rouge);border-left:4px solid var(--rouge);display:block}
+.msg.ok{background:var(--vertC);color:var(--vert);border-left:4px solid var(--vert);display:block}
+.score{background:var(--pruneD);color:#fff;border-radius:10px;padding:22px;text-align:center;
+ display:none;margin-top:20px}
+.score.on{display:block}
+.score .n{font-size:34px;font-weight:700}
+.score p{margin:8px 0 0;color:#EBD6E4;font-size:14px}
+footer{text-align:center;color:var(--grisM);font-size:11px;padding:24px 16px 30px}
+</style></head><body>
+
+<header><div class="in">
+<div class="marque">TMK PERFORMANCES</div>
+<h1>Exercice — La franchise et la participation forfaitaire</h1>
+<p>Séquence 3 · Exercice d'entraînement · 17 points</p>
+</div></header>
+
+<div class="wrap">
+<div class="card" style="padding:14px 20px"><div class="badge wait" id="badge"><span class="pt"></span><span id="badgeT">Lecture de la base…</span></div><div style="font-size:12.5px;color:var(--grisM)">Les montants de cet exercice sont lus dans la base de paramètres : ils suivent les revalorisations.</div></div>
+<div id="liste"></div>
+
+<div class="score" id="score"><div class="n" id="scoreN">—</div><p id="scoreT"></p></div>
+
+<div class="bar" style="border:0;justify-content:center">
+  <button class="btn btn-g" onclick="rejouer()">Refaire l'exercice</button>
+</div>
+
+<footer>TMK Performances - N° Siret&nbsp;: 49841924100027 - Code NAF&nbsp;: 8559A</footer>
+</div>
+
+<script>
+function eur(v){ return v.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " €"; }
+function recalculer(P){
+  const A = EX.ateliers[1].items;
+  A[0].rep = 7 * P.fMed;
+  A[1].rep = 7 * Math.min(3 * P.fPara, P.fParaJ);
+  A[2].rep = Math.min(3 * P.fTrans, P.fTransJ);
+  A[3].rep = Math.min(5 * P.pf, P.pfJ);
+  A[4].rep = Math.min(5 * P.fMed, Math.max(0, P.fAn - 48));
+  const rap = t => '<span style="font-size:12.5px;color:var(--grisM)">' + t + '</span>';
+  A[0].q = A[0].q.replace('<span id=\'r1\'></span>',
+    rap("Franchise par boîte : " + eur(P.fMed) + " — il n'existe aucun plafond journalier sur les médicaments."));
+  A[1].q = A[1].q.replace('<span id=\'r2\'></span>',
+    rap("Franchise par acte d'auxiliaire médical : " + eur(P.fPara)
+        + " — plafond journalier : " + eur(P.fParaJ) + "."));
+  A[2].q = A[2].q.replace('<span id=\'r3\'></span>',
+    rap("Franchise par transport : " + eur(P.fTrans) + " — plafond journalier : " + eur(P.fTransJ) + "."));
+  A[3].q = A[3].q.replace('<span id=\'r4\'></span>',
+    rap("Participation forfaitaire par acte : " + eur(P.pf)
+        + " — plafond journalier chez un même professionnel : " + eur(P.pfJ) + "."));
+  A[4].q = A[4].q.replace('<span id=\'r5\'></span>',
+    rap("Franchise par boîte : " + eur(P.fMed) + " — plafond annuel des franchises : " + eur(P.fAn) + "."));
+  A[0].x = "Sept boîtes, sept fois la franchise. Contrairement aux actes paramédicaux et aux transports, "
+         + "les médicaments ne connaissent aucun plafond journalier : c'est le plafond annuel qui les borne.";
+  A[1].x = "Trois actes par jour font " + eur(3 * P.fPara) + ", soit moins que le plafond journalier de "
+         + eur(P.fParaJ) + ". Le plafond ne joue donc pas, et l'on multiplie par sept jours.";
+  A[2].x = "Trois transports feraient " + eur(3 * P.fTrans) + ", mais le plafond journalier des transports "
+         + "ramène la retenue à " + eur(P.fTransJ) + ".";
+  A[3].x = "Cinq actes feraient " + eur(5 * P.pf) + ", mais le plafond journalier chez un même professionnel "
+         + "limite la retenue à " + eur(P.pfJ) + ".";
+  A[4].x = "Cinq boîtes feraient " + eur(5 * P.fMed) + ", mais il ne reste que "
+         + eur(Math.max(0, P.fAn - 48)) + " avant d'atteindre le plafond annuel. "
+         + "Une fois ce plafond atteint, plus aucune franchise n'est retenue jusqu'au 1er janvier suivant.";
+}
+
+const EX = {"total": 17, "seuil": 12, "supabase": {"url": "https://ibkvyjlglwufxvzxnysa.supabase.co", "key": "sb_publishable_xUfZHSOHf4TnBRRyzU_qJA_TcXIMSKX", "table": "parametres_sante"}, "params": [{"id": "pf", "cle": "sante_participation_forfaitaire", "def": 2.0}, {"id": "pfJ", "cle": "sante_pf_plafond_jour", "def": 8.0}, {"id": "fMed", "cle": "sante_franchise_medicament", "def": 1.0}, {"id": "fPara", "cle": "sante_franchise_acte_paramedical", "def": 1.0}, {"id": "fTrans", "cle": "sante_franchise_transport", "def": 4.0}, {"id": "fParaJ", "cle": "sante_franchise_plafond_jour_paramedical", "def": 4.0}, {"id": "fTransJ", "cle": "sante_franchise_plafond_jour_transport", "def": 8.0}, {"id": "fAn", "cle": "sante_franchise_plafond_annuel", "def": 50.0}], "ateliers": [{"titre": "Atelier 1 — Franchise, participation forfaitaire, ou ni l'une ni l'autre ?", "sub": "7 situations · 7 points", "consigne": "Les deux prélèvements ne portent pas sur les mêmes actes. La distinction se fait sur <b>la nature de l'acte</b>, jamais sur son prix. Attention&nbsp;: certains actes n'appellent ni l'un ni l'autre.", "type": "bouton", "options": ["Participation forfaitaire", "Franchise médicale", "Ni l'une ni l'autre"], "items": [{"q": "Une consultation chez un médecin généraliste.", "rep": 0, "x": "La participation forfaitaire porte sur les consultations et les actes réalisés par un médecin."}, {"q": "Une boîte de médicaments délivrée en pharmacie.", "rep": 1, "x": "La franchise se compte par boîte délivrée, et non par ordonnance ni par ligne de prescription."}, {"q": "Une séance chez un masseur-kinésithérapeute.", "rep": 1, "x": "Les actes des auxiliaires médicaux — infirmier, kinésithérapeute, orthophoniste, orthoptiste — relèvent de la franchise."}, {"q": "Une analyse de biologie médicale prescrite par le médecin traitant.", "rep": 0, "x": "La biologie médicale relève de la participation forfaitaire, au même titre que les actes des médecins."}, {"q": "Un transport en ambulance vers l'hôpital.", "rep": 1, "x": "Les transports sanitaires supportent une franchise, d'un montant propre et plus élevé que les autres catégories."}, {"q": "Un acte réalisé au cours d'une hospitalisation.", "rep": 2, "x": "Les actes réalisés pendant une hospitalisation échappent à la franchise. Cette précision explique bien des écarts entre ce que le patient attendait et ce qu'il lit sur son décompte."}, {"q": "Une radiographie prescrite par le médecin traitant et réalisée en cabinet de radiologie.", "rep": 0, "x": "Les examens de radiologie sont des actes médicaux : ils relèvent de la participation forfaitaire."}]}, {"titre": "Atelier 2 — Combien reste-t-il à la charge de l'assuré ?", "sub": "5 calculs · 5 points", "unite": "€", "consigne": "Calculez la somme retenue au titre de la franchise ou de la participation forfaitaire. Les montants et les plafonds en vigueur figurent sous chaque situation. Saisissez le résultat sans le symbole €, avec deux décimales.", "type": "num", "items": [{"q": "<b>Monsieur Fatani</b> se voit délivrer <b>7 boîtes de médicaments</b> le même jour, sur une seule ordonnance.<br><span id='r1'></span>", "rep": 7.0, "x": ""}, {"q": "<b>Monsieur Mercier</b> sort d'hospitalisation. Une infirmière lui fait une injection le matin et refait son pansement matin et soir, <b>pendant 7 jours</b>, soit trois actes par jour.<br><span id='r2'></span>", "rep": 21.0, "x": ""}, {"q": "<b>Madame Ozanne</b> effectue <b>3 transports sanitaires</b> le même jour, entre son domicile, le centre d'examen et l'hôpital.<br><span id='r3'></span>", "rep": 8.0, "x": ""}, {"q": "<b>Monsieur Bellec</b> consulte son médecin traitant, qui réalise <b>5 actes différents</b> au cours de la même journée.<br><span id='r4'></span>", "rep": 8.0, "x": ""}, {"q": "<b>Madame Ferrand</b> a déjà supporté <b>48,00 €</b> de franchises depuis le 1er janvier. On lui délivre <b>5 boîtes de médicaments</b>.<br><span id='r5'></span>", "rep": 2.0, "x": ""}]}, {"titre": "Atelier 3 — Vrai ou faux", "sub": "5 affirmations · 5 points", "consigne": "Cinq affirmations sur le fonctionnement de ces deux prélèvements.", "type": "bouton", "options": ["Vrai", "Faux"], "items": [{"q": "Ces sommes sont réglées par le patient au moment des soins, au guichet.", "rep": 1, "x": "Elles ne sont jamais payées au guichet : elles sont déduites des remboursements versés ensuite. D'où le décalage déroutant que le client constate sur son décompte."}, {"q": "Une affection de longue durée dispense de la participation forfaitaire et des franchises.", "rep": 1, "x": "C'est l'erreur la plus fréquente. L'affection de longue durée exonère du ticket modérateur pour les soins en rapport avec elle, mais ni de la participation forfaitaire, ni des franchises."}, {"q": "Les patients mineurs en sont exonérés.", "rep": 0, "x": "Les mineurs, les femmes enceintes à partir d'un certain stade de la grossesse et les bénéficiaires de la complémentaire santé solidaire en sont dispensés."}, {"q": "Un contrat santé responsable peut les rembourser si la garantie souscrite est suffisamment élevée.", "rep": 1, "x": "Aucun contrat responsable n'en a le droit. Un client qui vous demande une garantie les couvrant vous demande quelque chose qui n'existe pas sur ce marché."}, {"q": "La franchise médicale et la participation forfaitaire se partagent un même plafond annuel.", "rep": 1, "x": "Chacune a son propre plafond annuel. Un même assuré peut donc supporter les deux dans la même année, ce qui double la somme irréductible qu'il faut annoncer honnêtement."}]}]};</script>
+<script>
+['copy','cut','paste','contextmenu','dragstart'].forEach(e =>
+  document.addEventListener(e, ev => ev.preventDefault()));
+
+const REP = {};              /* "a_i" -> index choisi */
+const FAIT = {};             /* atelier validé */
+const PTS = {};
+
+function rendre(){
+  let h = "";
+  EX.ateliers.forEach((a, ai) => {
+    h += '<div class="card"><h2>' + a.titre + '</h2><div class="sub">' + a.sub + '</div>'
+       + '<div class="consigne">' + a.consigne + '</div>';
+    a.items.forEach((it, i) => {
+      h += '<div class="it"><div class="q">' + it.q + '</div>';
+      if(a.type === "num"){
+        h += '<input class="num" type="text" inputmode="decimal" id="n' + ai + '_' + i
+           + '" placeholder="0,00" autocomplete="off" oninput="saisir(' + ai + ',' + i + ')">'
+           + ' <span style="font-size:13px;color:var(--grisM)">' + (a.unite || "€") + '</span>';
+      }else if(a.type === "select"){
+        h += '<select id="s' + ai + '_' + i + '" onchange="choisirSel(' + ai + ',' + i + ')">'
+           + '<option value="">— à choisir —</option>'
+           + a.options.map((o, j) => '<option value="' + j + '">' + o + '</option>').join("")
+           + '</select>';
+      }else{
+        const opts = it.o || a.options;
+        h += '<div class="ch" id="c' + ai + '_' + i + '">'
+           + opts.map((o, j) => '<button id="b' + ai + '_' + i + '_' + j
+               + '" onclick="choisir(' + ai + ',' + i + ',' + j + ')">' + o + '</button>').join("")
+           + '</div>';
+      }
+      if(it.x) h += '<div class="x" id="x' + ai + '_' + i + '"></div>';
+      h += '</div>';
+    });
+    h += '<div class="bar"><button class="btn btn-p" id="v' + ai + '" onclick="valider(' + ai + ')">'
+       + 'Valider l\'atelier</button><span class="fige" id="f' + ai + '"></span></div>'
+       + '<div class="msg" id="m' + ai + '"></div></div>';
+  });
+  document.getElementById("liste").innerHTML = h;
+}
+
+function choisir(ai, i, j){
+  if(FAIT[ai]) return;
+  REP[ai + "_" + i] = j;
+  const a = EX.ateliers[ai], opts = a.items[i].o || a.options;
+  opts.forEach((_, k) =>
+    document.getElementById("b" + ai + "_" + i + "_" + k).classList.toggle("on", k === j));
+}
+function saisir(ai, i){
+  if(FAIT[ai]) return;
+  const v = document.getElementById("n" + ai + "_" + i).value.trim().replace(",", ".");
+  if(v === "" || isNaN(parseFloat(v))) delete REP[ai + "_" + i];
+  else REP[ai + "_" + i] = parseFloat(v);
+}
+function choisirSel(ai, i){
+  if(FAIT[ai]) return;
+  const v = document.getElementById("s" + ai + "_" + i).value;
+  if(v === "") delete REP[ai + "_" + i]; else REP[ai + "_" + i] = +v;
+}
+
+function valider(ai){
+  if(FAIT[ai]) return;                       /* garde : atelier déjà validé */
+  const a = EX.ateliers[ai];
+  const manque = a.items.map((_, i) => i).filter(i => REP[ai + "_" + i] === undefined);
+  if(manque.length){                          /* complétude AVANT toute correction */
+    const m = document.getElementById("m" + ai);
+    m.className = "msg err";
+    m.textContent = manque.length === 1
+      ? "Une réponse manque encore dans cet atelier."
+      : manque.length + " réponses manquent encore dans cet atelier.";
+    return;
+  }
+  FAIT[ai] = true;
+  let pts = 0;
+  a.items.forEach((it, i) => {
+    const don = REP[ai + "_" + i];
+    const ok = (a.type === "num") ? Math.abs(don - it.rep) <= 0.01 : (don === it.rep);
+    if(ok) pts++;
+    if(a.type === "num"){
+      const n = document.getElementById("n" + ai + "_" + i);
+      n.disabled = true; n.classList.add(ok ? "juste" : "rate");
+    }else if(a.type === "select"){
+      const s = document.getElementById("s" + ai + "_" + i);
+      s.disabled = true; s.classList.add(ok ? "juste" : "rate");
+      if(!ok) s.title = "";
+    }else{
+      const opts = it.o || a.options;
+      opts.forEach((_, k) => {
+        const b = document.getElementById("b" + ai + "_" + i + "_" + k);
+        b.disabled = true;
+        if(k === it.rep) b.classList.add("juste");
+        else if(k === don) b.classList.add("rate");
+      });
+    }
+    if(it.x){
+      const x = document.getElementById("x" + ai + "_" + i);
+      const att = (a.type === "num")
+          ? it.rep.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2}) + " " + (a.unite || "€")
+          : (a.type === "select" ? a.options : (it.o || a.options))[it.rep];
+      x.innerHTML = "<b>" + (ok ? "Juste." : "Réponse attendue : " + att + ".") + "</b> " + it.x;
+      x.classList.add("on");
+    }
+  });
+  PTS[ai] = pts;
+  const b = document.getElementById("v" + ai);
+  b.disabled = true; b.textContent = "Atelier validé";
+  document.getElementById("f" + ai).textContent = "Réponses figées";
+  const m = document.getElementById("m" + ai);
+  m.className = "msg " + (pts === a.items.length ? "ok" : "err");
+  m.textContent = pts + " bonne(s) réponse(s) sur " + a.items.length + ".";
+  if(EX.ateliers.every((_, k) => FAIT[k])) bilan();
+}
+
+function bilan(){
+  const t = EX.ateliers.reduce((s, _, k) => s + (PTS[k] || 0), 0);
+  document.getElementById("scoreN").textContent = t + " / " + EX.total;
+  document.getElementById("scoreT").textContent = t >= EX.seuil
+    ? "Séquence acquise. Vous pouvez passer au questionnaire."
+    : "Reprenez la capsule et la fiche mémo avant de passer au questionnaire.";
+  document.getElementById("score").classList.add("on");
+  const sc = document.getElementById("score");
+  if(sc.scrollIntoView) sc.scrollIntoView({behavior:"smooth", block:"center"});
+}
+
+function rejouer(){
+  Object.keys(REP).forEach(k => delete REP[k]);
+  Object.keys(FAIT).forEach(k => delete FAIT[k]);
+  Object.keys(PTS).forEach(k => delete PTS[k]);
+  rendre();
+  document.getElementById("score").classList.remove("on");
+  if(window.scrollTo) window.scrollTo({top:0, behavior:"smooth"});
+}
+
+async function demarrer(){
+  if(!EX.supabase){ rendre(); return; }
+  const S = EX.supabase;
+  const url = S.url + "/rest/v1/" + S.table + "?select=cle,valeur";
+  const cle = new URLSearchParams(location.search).get("key") || S.key;
+  const P = {}; EX.params.forEach(p => P[p.id] = p.def);
+  let etat = "fall", txt = "Base injoignable — valeurs de repli utilisées";
+  try{
+    let r = await fetch(url + "&apikey=" + encodeURIComponent(cle));
+    if(!r.ok) r = await fetch(url, {headers:{apikey:cle, Authorization:"Bearer " + cle}});
+    if(!r.ok) throw new Error("HTTP " + r.status);
+    const data = await r.json();
+    if(Array.isArray(data) && data.length){
+      const B = {}; data.forEach(x => B[x.cle] = x);
+      let n = 0;
+      EX.params.forEach(p => {
+        if(B[p.cle] && B[p.cle].valeur !== null){ P[p.id] = parseFloat(B[p.cle].valeur); n++; }
+      });
+      etat = (n === EX.params.length) ? "live" : "fall";
+      txt = (n === EX.params.length)
+        ? "Montants lus dans la base de paramètres"
+        : n + " montant(s) sur " + EX.params.length + " lus dans la base";
+    }else{ txt = "Base joignable mais aucune ligne lue — valeurs de repli utilisées"; }
+  }catch(e){}
+  if(typeof recalculer === "function") recalculer(P);
+  const b = document.getElementById("badge");
+  if(b){ b.className = "badge " + etat; document.getElementById("badgeT").textContent = txt; }
+  rendre();
+}
+demarrer();
+</script>
+</body></html>
